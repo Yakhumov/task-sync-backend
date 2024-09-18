@@ -46,7 +46,7 @@ export class AuthService {
     private issueTokens(userId: string) {
         const data = { id: userId }
 
-        const accesToken = this.jwt.sign(data, {
+        const accessToken = this.jwt.sign(data, {
             expiresIn: "1h"
         })
 
@@ -54,7 +54,7 @@ export class AuthService {
             expiresIn: "7d"
         })
 
-        return { accesToken, refreshToken }
+        return { accessToken, refreshToken }
     }
 
     private async validateUser(dto: AuthDto) {
