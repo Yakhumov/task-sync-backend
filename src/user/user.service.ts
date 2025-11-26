@@ -32,10 +32,7 @@ export class UserService {
     const profile = await this.getById(id);
 
     const totalTasks = profile.tasks.length
-
-    // плохой подход, по хорошему нужно создать отдельную сущность и там
-    // через task service обращаться к this.prisma.task.count,
-    // а тут уже использовать этот сервис
+    
     const completedTasks = await this.prisma.task.count({
       where: {
         userId: id,
@@ -46,9 +43,6 @@ export class UserService {
     const todayStart = startOfDay(new Date())
     const weekStart = startOfDay(subDays(new Date(), 7))
 
-    // плохой подход, по хорошему нужно создать отдельную сущность и там
-    // через task service обращаться к this.prisma.task.count,
-    // а тут уже использовать этот сервис
     const todayTasks = await this.prisma.task.count({
       where: {
         userId: id,
@@ -58,9 +52,6 @@ export class UserService {
       }
     })
 
-    // плохой подход, по хорошему нужно создать отдельную сущность и там
-    // через task service обращаться к this.prisma.task.count,
-    // а тут уже использовать этот сервис
     const weekTasks = await this.prisma.task.count({
       where: {
         userId: id,
