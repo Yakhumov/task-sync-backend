@@ -9,7 +9,7 @@ export class TaskDto {
 
     @IsBoolean()
     @IsOptional()
-    isCompleted?: boolean
+    isCompleted?: boolean 
 
     @IsString()
     @IsOptional()
@@ -19,4 +19,4 @@ export class TaskDto {
     @IsOptional()
     @Transform(({value}) => ("" + value).toLowerCase())
     priority?: Priority
-}
+} 

@@ -11,7 +11,7 @@ export class UserService {
 
   getById(id: string) {
     return this.prisma.user.findUnique({
-      where: {
+      where: { 
         id
       },
       include: {
@@ -40,7 +40,7 @@ export class UserService {
       }
     })
 
-    const todayStart = startOfDay(new Date())
+    const todayStart = startOfDay(new Date()) 
     const weekStart = startOfDay(subDays(new Date(), 7))
 
     const todayTasks = await this.prisma.task.count({
@@ -78,7 +78,7 @@ export class UserService {
   async create(dto: AuthDto) {
     const user = {
       email: dto.email,
-      name: '',
+      name: null,
       password: await hash(dto.password)
     }
 

@@ -10,11 +10,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api')
   app.use(cookieParser())
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: process.env.CORS_ORIGIN || /^http:\/\/localhost:\d+$/,
     credentials: true,
     exposedHeaders: "set-cookie"
   })
-  
-  await app.listen(process.env.SERVER_PORT);
+ await app.listen(process.env.PORT || 3000);
+
 }
 bootstrap();

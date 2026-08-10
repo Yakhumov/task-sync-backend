@@ -37,10 +37,11 @@ export class TaskService {
     })
   }
 
-  async delete(taskId: string) {
-    return this.prisma.task.delete({
+  async delete(taskId: string, userId: string) {
+    return this.prisma.task.deleteMany({
       where: {
-        id: taskId
+        id: taskId,
+        userId
       }
     })
   }

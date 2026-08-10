@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import { AuthDto } from './dto/auth.dto';
@@ -12,7 +13,8 @@ export class AuthService {
 
     constructor(
         private jwt: JwtService,
-        private userService: UserService
+        private userService: UserService,
+        private config: ConfigService
     ) { }
 
     async login(dto: AuthDto) {
@@ -75,7 +77,7 @@ export class AuthService {
 
         res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
             httpOnly: true,
-            domain: 'localhost',
+            domain: this.config.get<string>('COOKIE_DOMAIN') || 'localhost',
             expires: expiresIn,
             secure: true,
             // lax if prod
@@ -100,7 +102,7 @@ export class AuthService {
     removeRefreshTokenToResponse(res: Response) {
         res.cookie(this.REFRESH_TOKEN_NAME, '', {
             httpOnly: true,
-            domain: 'localhost',
+            domain: this.config.get<string>('COOKIE_DOMAIN') || 'localhost',
             expires: new Date(0),
             secure: true,
             // lax if prod

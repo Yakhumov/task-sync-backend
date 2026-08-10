@@ -7,15 +7,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { getJwtConfig } from 'src/config/jwt.config';
 
+export const getJwtConfigs = (config: ConfigService) => ({
+  secret: config.get<string>('JWT_SECRET'), // берём из .env
+  signOptions: { expiresIn: config.get<string>('JWT_EXPIRES_IN') || '1h' },
+});
+
 @Module({
   imports: [
     UserModule,
-    ConfigModule,
+    ConfigModule.forRoot({ isGlobal: true }), // чтобы ConfigService был доступен
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: getJwtConfig
-    })
+      useFactory: getJwtConfig,
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

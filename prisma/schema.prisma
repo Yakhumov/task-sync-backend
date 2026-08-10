@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -22,7 +23,7 @@ model User {
   name     String?
   password String
 
-  workInterval     Int?              @default(50) @map("is_completed")
+  workInterval     Int?              @default(50) @map("work_interval")
   breakInterval    Int?              @default(10) @map("break_interval")
   intervalsCount   Int?              @default(7) @map("intervals_count")
   tasks            Task[]
